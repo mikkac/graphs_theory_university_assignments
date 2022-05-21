@@ -1,0 +1,14 @@
+graph G {
+	graph [name=G];
+	node [shape=circle];
+	1 -- 2	[key=0,
+		label=28];
+	1 -- 4	[key=0,
+		label=15];
+	2 -- 3	[key=0,
+		label=37];
+	2 -- 4	[key=0,
+		label=42];
+	3 -- 4	[key=0,
+		label=95];
+}

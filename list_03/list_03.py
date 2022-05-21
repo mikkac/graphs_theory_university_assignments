@@ -1,4 +1,4 @@
-""" Graphs theory assignment number 2 """
+""" Graphs theory assignment number 3 """
 from __future__ import annotations
 
 from queue import PriorityQueue
