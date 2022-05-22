@@ -10,8 +10,12 @@ import itertools
 import random
 from typing import List, Iterable, Set, Tuple
 
-import network
-from dijkstra import find_cost
+import sys, os
+
+sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
+# from list_04 import network, dijkstra
+
+from list_04 import network, dijkstra
 
 
 def all_unique(iterable: Iterable) -> bool:
@@ -36,6 +40,7 @@ def fleury_walk(graph: network.Graph, start: int) -> List[int]:
     node: int = start
 
     route: List[int] = [node]
+    total_cost: int = 0
     while len(visited) < len(graph):
         # Fleury's algorithm tells us to preferentially select non-bridges
         reduced_graph: network.Graph = copy.deepcopy(graph)
@@ -50,13 +55,14 @@ def fleury_walk(graph: network.Graph, start: int) -> List[int]:
         else:
             break  # Reached a dead-end, no path options
         next_node: int = reduced_graph.edges[chosen_path].end(node)  # Other end
-
+        next_node_cost: int = reduced_graph.edges[chosen_path].weight
         visited.add(chosen_path)  # Never revisit this edge
 
         route.append(next_node)
+        total_cost += next_node_cost
         node = next_node
 
-    return route
+    return route, total_cost
 
 
 def eularian_path(graph: network.Graph, start: int) -> Tuple[List[int], int]:
@@ -68,10 +74,10 @@ def eularian_path(graph: network.Graph, start: int) -> Tuple[List[int], int]:
     If `start` is set, force start at that Node.
     """
     for i in range(1, 5000):
-        route: List[int] = fleury_walk(graph, start)
+        route, cost = fleury_walk(graph, start)
         if len(route) == len(graph) + 1:  # We visited every edge
-            return route, i
-    return [], i  # Never found a solution
+            return route, cost
+    return [], -1  # Never found a solution
 
 
 def find_dead_ends(graph: network.Graph) -> Set[int]:
@@ -126,7 +132,7 @@ def find_node_pair_solutions(
     node_pair_solutions: dict = {}
     for node_pair in node_pairs:
         if node_pair not in node_pair_solutions:
-            cost, path = find_cost(node_pair, graph)
+            cost, path = dijkstra.find_cost(node_pair, graph)
             node_pair_solutions[node_pair] = (cost, path)
             # Also store the reverse pair
             node_pair_solutions[node_pair[::-1]] = (cost, path[::-1])

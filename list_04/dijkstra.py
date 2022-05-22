@@ -1,7 +1,7 @@
 """ Minimum Cost Path solver using Dijkstra's Algorithm. """
 from typing import List, Set
 
-import network
+from list_04 import network
 
 
 def summarize_path(end: int, previous_nodes: dict):

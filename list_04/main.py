@@ -6,12 +6,13 @@ For a given graph, determine the minimum amount of backtracking
 required to complete an Eularian circuit.
 
 """
+import os
+import pathlib
 import eularian, network
 
 
-def main():
-    """Make it so."""
-    graph_path: str = "g1.txt"
+def chinese_postman_problem():
+    graph_path: str = os.path.join(pathlib.Path(__file__).parent.resolve(), "g1.txt")
     start_node: int = 4
     print(f"Loading graph: {graph_path}")
 
@@ -28,18 +29,17 @@ def main():
         graph = original_graph
 
     print("Attempting to solve Eularian Circuit...")
-    route, attempts = eularian.eularian_path(graph, start=start_node)
+    route, cost = eularian.eularian_path(graph, start=start_node)
     if not route:
-        print(f"\tGave up after <{attempts}> attempts.")
+        print("\tGave up")
     else:
-        print(f"\tSolved in <{attempts}> attempts")
-        print(f"Solution:\n\t{route}")
+        print(f"Solution (cost={cost}):\n\t{route}")
 
     original_graph.dump_graph(
-        f"task_01_{graph_path.split('.')[0]}.jpg",
-        f"task_01_{graph_path.split('.')[0]}.dot",
+        f"{graph_path.split('.')[0]}_task_01.jpg",
+        f"{graph_path.split('.')[0]}_task_01_.dot",
     )
 
 
 if __name__ == "__main__":
-    main()
+    chinese_postman_problem()
