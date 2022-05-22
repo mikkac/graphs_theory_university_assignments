@@ -6,6 +6,5 @@ pip install -r requirements.txt
 ```
 
 ---
-**NOTE**
-List 4 (Chinese Postman Problem) was implemented based on https://github.com/supermitch/Chinese-Postman
+**Note** List 4 (Chinese Postman Problem) was implemented based on https://github.com/supermitch/Chinese-Postman
 ---
